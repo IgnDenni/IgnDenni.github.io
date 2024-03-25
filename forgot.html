@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forgot</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 30px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background-color: white;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 10px;
+      background-color: rgb(0, 104, 90);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .form-group button:hover {
+      background-color: rgb(0, 175, 152);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center">Forgot Password</h1>
+    <form id="forgot-password-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter your email address" required>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="form-control">Reset Password</button>
+      </div>
+    </form>
+    <p class="text-center">Remember your password? <a href="index.html">Log in here</a></p>
+  </div>
+  <script>
+    $(document).ready(function() {
+      $("#forgot-password-form").submit(function(event) {
+        event.preventDefault();
+        const email = $("#email").val();
+        // Periksa validasi
+        if (!email) {
+          alert("Please enter your email address.");
+          return;
+        }
+        // Kirim data ke server
+        $.ajax({
+          type: "POST",
+          url: "forgot-password.php",
+          data: {
+            email: email
+          },
+          success: function(response) {
+            // Tangani respons dari server
+            if (response === "Berhasil") {
+              alert("Please check your email for instructions to reset your password.");
+            } else {
+              alert("Failed to send password reset email: " + response);
+            }
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
